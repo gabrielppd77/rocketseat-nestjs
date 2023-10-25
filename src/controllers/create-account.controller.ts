@@ -4,7 +4,6 @@ import {
   Body,
   Post,
   ConflictException,
-  UsePipes,
   HttpStatus,
 } from '@nestjs/common';
 
@@ -28,8 +27,10 @@ export class CreateAccountController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  @UsePipes(new ZodValidationPipe(createAccountBodySchema))
-  async handle(@Body() body: CreateAccountBodySchema) {
+  async handle(
+    @Body(new ZodValidationPipe(createAccountBodySchema))
+    body: CreateAccountBodySchema,
+  ) {
     const { name, email, password } = createAccountBodySchema.parse(body);
 
     const userWithSameEmail = await this.prisma.user.findUnique({
