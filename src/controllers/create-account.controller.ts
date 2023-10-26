@@ -1,11 +1,4 @@
-import {
-  Controller,
-  HttpCode,
-  Body,
-  Post,
-  ConflictException,
-  HttpStatus,
-} from '@nestjs/common';
+import { Controller, Body, Post, ConflictException } from '@nestjs/common';
 
 import { PrismaService } from '@/prisma/prisma.service';
 
@@ -26,7 +19,6 @@ export class CreateAccountController {
   constructor(private prisma: PrismaService) {}
 
   @Post()
-  @HttpCode(HttpStatus.CREATED)
   async handle(
     @Body(new ZodValidationPipe(createAccountBodySchema))
     body: CreateAccountBodySchema,

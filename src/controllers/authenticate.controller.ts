@@ -1,4 +1,11 @@
-import { Body, Controller, Post, UnauthorizedException } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+  UnauthorizedException,
+} from '@nestjs/common';
 
 import { PrismaService } from '@/prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
@@ -19,6 +26,7 @@ export class AuthenticateController {
   constructor(private prisma: PrismaService, private jwtService: JwtService) {}
 
   @Post()
+  @HttpCode(HttpStatus.OK)
   async handle(
     @Body(new ZodValidationPipe(authenticateBodySchema))
     body: AuthenticateBodySchema,
